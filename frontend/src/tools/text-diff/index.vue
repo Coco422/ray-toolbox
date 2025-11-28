@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as monaco from 'monaco-editor'
+// 引入 Monaco CSS
+import 'monaco-editor/min/vs/editor/editor.main.css'
 // 简单的 Worker 配置，仅用于文本编辑
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 
@@ -20,7 +22,9 @@ onMounted(() => {
     automaticLayout: true,
     theme: 'vs', // 或 vs-dark
     renderSideBySide: true,
-    diffWordWrap: 'off'
+    diffWordWrap: 'off',
+    scrollBeyondLastLine: false,
+    minimap: { enabled: false }
   })
 
   const originalModel = monaco.editor.createModel('', 'text/plain')
@@ -40,12 +44,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="h-full flex flex-col">
+  <div class="h-full flex flex-col" style="height: calc(100vh - 140px);">
     <div class="mb-2 text-sm text-gray-500 flex justify-between px-2">
         <span>Original (左侧可编辑)</span>
         <span>Modified (右侧可编辑)</span>
     </div>
-    <div ref="container" class="flex-1 border border-gray-200 rounded overflow-hidden min-h-[500px]"></div>
+    <div ref="container" class="flex-1 border border-gray-200 rounded overflow-hidden shadow-sm"></div>
   </div>
 </template>
 
