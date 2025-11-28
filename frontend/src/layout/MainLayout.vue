@@ -4,11 +4,11 @@ import { useRouter, useRoute } from 'vue-router'
 import { NLayout, NLayoutSider, NLayoutHeader, NLayoutContent, NMenu, NInput, NIcon } from 'naive-ui'
 import { Icon } from '@iconify/vue'
 import { tools, getToolsByCategory } from '@/core/registry'
+import logoUrl from '@/static/favicon.ico'
 
 const router = useRouter()
 const route = useRoute()
 const collapsed = ref(false)
-const search = ref('')
 
 const menuOptions = computed(() => {
   const groups = getToolsByCategory()
@@ -48,7 +48,7 @@ function renderIcon(icon: string) {
       @expand="collapsed = false"
     >
       <div class="p-4 font-bold text-xl flex items-center gap-2 cursor-pointer" @click="router.push('/')">
-        <Icon icon="mdi:toolbox" class="text-primary text-2xl" />
+        <img :src="logoUrl" class="w-8 h-8" alt="Logo" />
         <span v-if="!collapsed">Ray Toolbox</span>
       </div>
       <n-menu
@@ -68,12 +68,11 @@ function renderIcon(icon: string) {
         <div class="flex items-center gap-4">
            <h2 class="text-lg font-medium">{{ route.meta.title || '工具箱' }}</h2>
         </div>
-        <div class="w-64">
-          <n-input v-model:value="search" placeholder="搜索工具..." clearable>
-            <template #prefix>
-              <n-icon :component="Icon" icon="mdi:magnify" />
-            </template>
-          </n-input>
+        <div>
+           <a href="https://blog.anluoying.com" target="_blank" class="text-gray-500 hover:text-primary transition-colors flex items-center gap-1">
+              <Icon icon="mdi:web" />
+              Ray-Blog
+           </a>
         </div>
       </n-layout-header>
       <n-layout-content content-style="padding: 24px;" class="bg-gray-50">
